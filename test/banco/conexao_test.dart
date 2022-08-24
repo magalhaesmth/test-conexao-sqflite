@@ -16,9 +16,19 @@ void main() async {
     db.close();
   });
 
-  group('teste de conexao', () {
-    test('testando conexao aberta', () {
+  group('Teste de Conexão', () {
+    test('Testando a conexão aberta', () {
       expect(db.isOpen, true);
+    });
+
+    test('Testando a conexão em consulta do Usuario', () async {
+      var resultado = await db.query('usuario');
+      expect(resultado.length, isInstanceOf<int>());
+    });
+
+    test('Testando a conexão em consulta das Entregas', () async {
+      var resultado = await db.query('entrega');
+      expect(resultado.length, isInstanceOf<int>());
     });
   });
 }
