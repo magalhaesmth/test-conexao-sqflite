@@ -5,16 +5,15 @@ final criarBanco = [
       nome TEXT NULL UNIQUE,
       veiculo TEXT NOT NULL,
       senha TEXT NOT NULL
-
     )
   ''',
-  //'''
-  //CREATE TABLE empresa(
-  //id INTEGER NOT NULL PRIMARY KEY,
-  //nome TEXT NULL UNIQUE,
-  //senha TEXT NOT NULL
-  //)
-  //''',
+  '''
+    CREATE TABLE empresa(
+      id INTEGER NOT NULL PRIMARY KEY,
+      nome TEXT NULL UNIQUE,
+      senha TEXT NOT NULL
+    )
+  ''',
   '''
     CREATE TABLE entrega(
       id INTEGER NOT NULL PRIMARY KEY,
