@@ -47,6 +47,16 @@ void main() {
       expect(resultado, true);
     });
 
-    
+    test('Testando excluir entrega', () async {
+      await entregaDAO.salvar(entrega);
+      var resultado = await entregaDAO.excluir(1);
+      expect(resultado, true);
+    });
+
+    test('Consultando apenas um', () async {
+      await entregaDAO.salvar(entrega);
+      var resultado = await entregaDAO.consultar(1);
+      expect(resultado, isInstanceOf<Entrega>());
+    });
   });
 }

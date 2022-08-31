@@ -40,5 +40,17 @@ void main() {
       var resultado = await empresaDAO.alterar(empresaAtualizada);
       expect(resultado, true);
     });
+
+    test('Testando excluir empresa', () async {
+      await empresaDAO.salvar(empresa);
+      var resultado = await empresaDAO.excluir(1);
+      expect(resultado, true);
+    });
+
+    test('Consultando apenas um', () async {
+      await empresaDAO.salvar(empresa);
+      var resultado = await empresaDAO.consultar(1);
+      expect(resultado, isInstanceOf<Empresa>());
+    });
   });
 }
