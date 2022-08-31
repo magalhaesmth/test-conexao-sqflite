@@ -6,17 +6,18 @@ class EntregaDAO {
   Future<bool> salvar(Entrega entrega) async {
     Database db = await Conexao.abrirConexao();
     const sql =
-        'INSERT INTO entrega (id, nome_entregador, valor_entrega, data_entrega) VALUES (?,?,?,?)';
+        'INSERT INTO entrega (id, nome_entregador, valor_entrega, data_entrega, empresa_id) VALUES (?,?,?,?,?)';
     var linhasAfetadas = await db.rawInsert(sql, [
       entrega.id,
       entrega.nome_entregador,
       entrega.valor_entrega,
-      entrega.data_entrega.toString()
+      entrega.data_entrega,
+      entrega.empresa.id
     ]);
     return linhasAfetadas > 0;
   }
 
-  Future<bool> alterar(Entrega entrega) async {
+  /*Future<bool> alterar(Entrega entrega) async {
     const sql =
         'UPDATE entrega SET nome_entregador=?, valor_entrega=?, data_entrega=? WHERE id = ?';
     Database db = await Conexao.abrirConexao();
@@ -62,5 +63,5 @@ class EntregaDAO {
     } finally {
       db.close();
     }
-  }
+  }*/
 }
