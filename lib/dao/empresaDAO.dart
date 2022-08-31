@@ -5,27 +5,17 @@ import 'package:test_dao_sqflite/model/empresa.dart';
 class EmpresaDAO {
   Future<bool> salvar(Empresa empresa) async {
     Database db = await Conexao.abrirConexao();
-    const sql =
-        'INSERT INTO usuario (id, nome, veiculo, senha) VALUES (?,?,?,?)';
-    var linhasAfetadas = await db.rawInsert(sql, [
-      empresa.id,
-      empresa.nome,
-      empresa.data_empresa,
-      empresa.valor_empresa.toString()
-    ]);
+    const sql = 'INSERT INTO empresa (id, nome, endereco) VALUES (?,?,?)';
+    var linhasAfetadas = await db.rawInsert(
+        sql, [empresa.id, empresa.nome, empresa.endereco.toString()]);
     return linhasAfetadas > 0;
   }
 
   Future<bool> alterar(Empresa empresa) async {
-    const sql =
-        'UPDATE empresa SET nome=?, data_empresa=?, valor_empresa=? WHERE id = ?';
+    const sql = 'UPDATE empresa SET nome=?, endereco=? WHERE id = ?';
     Database db = await Conexao.abrirConexao();
-    var linhasAfetadas = await db.rawUpdate(sql, [
-      empresa.id,
-      empresa.nome,
-      empresa.data_empresa,
-      empresa.valor_empresa.toString()
-    ]);
+    var linhasAfetadas =
+        await db.rawUpdate(sql, [empresa.nome, empresa.endereco, empresa.id]);
     return linhasAfetadas > 0;
   }
 
@@ -39,8 +29,7 @@ class EmpresaDAO {
       Empresa empresa = Empresa(
           id: resultado['id'] as int,
           nome: resultado['nome'].toString(),
-          data_empresa: resultado['data_empresa'].toString(),
-          valor_empresa: resultado['valor_empresa'].toString());
+          endereco: resultado['endereco'].toString());
       return empresa;
     } catch (e) {
       throw Exception('classe EmpresaDAO, método consultar');

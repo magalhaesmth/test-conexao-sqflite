@@ -6,25 +6,25 @@ class EntregaDAO {
   Future<bool> salvar(Entrega entrega) async {
     Database db = await Conexao.abrirConexao();
     const sql =
-        'INSERT INTO usuario (id, nome, veiculo, senha) VALUES (?,?,?,?)';
+        'INSERT INTO entrega (id, nome_entregador, valor_entrega, data_entrega) VALUES (?,?,?,?)';
     var linhasAfetadas = await db.rawInsert(sql, [
       entrega.id,
-      entrega.nome,
-      entrega.data_entrega,
-      entrega.valor_entrega.toString()
+      entrega.nome_entregador,
+      entrega.valor_entrega,
+      entrega.data_entrega.toString()
     ]);
     return linhasAfetadas > 0;
   }
 
   Future<bool> alterar(Entrega entrega) async {
     const sql =
-        'UPDATE entrega SET nome=?, data_entrega=?, valor_entrega=? WHERE id = ?';
+        'UPDATE entrega SET nome_entregador=?, valor_entrega=?, data_entrega=? WHERE id = ?';
     Database db = await Conexao.abrirConexao();
     var linhasAfetadas = await db.rawUpdate(sql, [
-      entrega.id,
-      entrega.nome,
+      entrega.nome_entregador,
+      entrega.valor_entrega,
       entrega.data_entrega,
-      entrega.valor_entrega.toString()
+      entrega.id
     ]);
     return linhasAfetadas > 0;
   }
@@ -37,10 +37,11 @@ class EntregaDAO {
       Map<String, Object?> resultado = (await db.rawQuery(sql, [id])).first;
       if (resultado.isEmpty) throw Exception('Sem registros com este ID');
       Entrega entrega = Entrega(
-          id: resultado['id'] as int,
-          nome: resultado['nome'].toString(),
-          data_entrega: resultado['data_entrega'].toString(),
-          valor_entrega: resultado['valor_entrega'].toString());
+        id: resultado['id'] as int,
+        nome_entregador: resultado['nome_entregador'].toString(),
+        valor_entrega: resultado['valor_entrega'].toString(),
+        data_entrega: resultado['data_entrega'].toString(),
+      );
       return entrega;
     } catch (e) {
       throw Exception('classe EntregaDAO, método consultar');
